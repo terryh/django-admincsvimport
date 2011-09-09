@@ -1,0 +1,13 @@
+{% extends "admin/change_form.html" %}
+{% block content %}
+<div id="content-main">
+
+
+<form action='.' enctype="multipart/form-data"  method="post">
+{% csrf_token %}
+{{ form }}
+<p />
+<input type="submit">
+</form>
+</div>
+{% endblock %}

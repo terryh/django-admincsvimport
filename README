@@ -1,0 +1,44 @@
+=======================
+Django Admin CSV Import
+=======================
+
+django-admincsvimport is a Django application which allows developers to load CSV files under django admin site.
+
+this application mostly reuse some snippets and code for easy to use from http://djangosnippets.org/snippets/2020/ 
+and https://github.com/shaunsephton/django-snippetscream
+
+Installation
+============
+
+django-admincsvimport depend on django-snippetscream  https://github.com/shaunsephton/django-snippetscream, 
+which has csv_serializer.py for csv file.
+
+git clone git://github.com/terryh/django-admincsvimport
+
+python django-csv-importer/setup.py install
+
+Then add `admincsvimport` to the ``INSTALLED_APPS`` setting of your Django, before `django.contrib.admin`
+to overwrite admin's change_list.html, put the following line to your urls.py 
+
+(r'^admin/(?P<app_label>.*)/(?P<model>.*)/import/', 'admincsvimport.views.get_import'), 
+
+
+
+Add CSV export action for you ModelAdmin
+==================================
+
+configure your admin.py
+
+
+from admincsvimport.views import export_as_csv_action
+
+class ExampleAdmin(admin.ModelAdmin):
+    ...
+    ...
+    ...
+    actions = [export_as_csv_action("Export selected emails as CSV file", fields=['email']),]
+    
+    or 
+    actions = [export_as_csv_action()]
+
+admin.site.register(ExampleModel, ExampleAdmin)
